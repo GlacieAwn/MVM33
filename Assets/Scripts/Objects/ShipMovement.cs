@@ -4,8 +4,7 @@ using UnityEngine.InputSystem;
 public class ShipMovement : MonoBehaviour
 {
     [Header("Movement")]
-    [SerializeField] private float forwardSpeed = 0f;
-    [SerializeField] private float maxForwardSpeed = 20f;
+    [SerializeField] private float maxSpeed = 20f;
     [SerializeField] private float acceleration = 10f;
     [SerializeField] private float deceleration = 20f;
     [SerializeField] private float verticalSpeed = 10f;
@@ -21,6 +20,7 @@ public class ShipMovement : MonoBehaviour
     private Quaternion visualModelNeutralRotation;
     private bool throttleActive;
     private bool brakeActive;
+    private float currentSpeed = 0f;
 
     private void Awake()
     {
@@ -50,12 +50,15 @@ public class ShipMovement : MonoBehaviour
     {
         Vector2 aim = inputActions.Player.Aim.ReadValue<Vector2>();
 
-        UpdateForwardSpeed();
+        UpdatecurrentSpeed();
 
         transform.Rotate(0f, aim.x * turnSpeed * Time.deltaTime, 0f, Space.Self);
 
-        Vector3 movement = transform.forward * forwardSpeed;
-        movement += Vector3.up * (aim.y * verticalSpeed);
+        float speedRatio = currentSpeed / maxSpeed;
+        float currentVerticalSpeed = verticalSpeed * speedRatio;
+
+        Vector3 movement = transform.forward * currentSpeed;
+        movement += Vector3.up * (aim.y * currentVerticalSpeed);
         transform.position += movement * Time.deltaTime;
 
         UpdateVisualBanking(aim.x, aim.y);
@@ -73,15 +76,15 @@ public class ShipMovement : MonoBehaviour
         throttleActive = false;
     }
 
-    private void UpdateForwardSpeed()
+    private void UpdatecurrentSpeed()
     {
         if (throttleActive)
         {
-            forwardSpeed = Mathf.Min(forwardSpeed + acceleration * Time.deltaTime, maxForwardSpeed);
+            currentSpeed = Mathf.Min(currentSpeed + acceleration * Time.deltaTime, maxSpeed);
         }
         else if (brakeActive)
         {
-            forwardSpeed = Mathf.Max(forwardSpeed - deceleration * Time.deltaTime, 0f);
+            currentSpeed = Mathf.Max(currentSpeed - deceleration * Time.deltaTime, 0f);
         }
     }
 
