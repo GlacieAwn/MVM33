@@ -5,6 +5,9 @@ public class ShipMovement : MonoBehaviour
 {
     [Header("Movement")]
     [SerializeField] private float forwardSpeed = 0f;
+    [SerializeField] private float maxForwardSpeed = 20f;
+    [SerializeField] private float acceleration = 10f;
+    [SerializeField] private float deceleration = 20f;
     [SerializeField] private float verticalSpeed = 10f;
     [SerializeField] private float turnSpeed = 10f;
 
@@ -16,6 +19,8 @@ public class ShipMovement : MonoBehaviour
 
     private InputSystem_Actions inputActions;
     private Quaternion visualModelNeutralRotation;
+    private bool throttleActive;
+    private bool brakeActive;
 
     private void Awake()
     {
@@ -29,17 +34,23 @@ public class ShipMovement : MonoBehaviour
 
     private void OnEnable()
     {
+        inputActions.Player.Throttle.performed += ToggleThrottle;
+        inputActions.Player.Brake.performed += ToggleBrake;
         inputActions.Player.Enable();
     }
 
     private void OnDisable()
     {
+        inputActions.Player.Throttle.performed -= ToggleThrottle;
+        inputActions.Player.Brake.performed -= ToggleBrake;
         inputActions.Player.Disable();
     }
 
     private void Update()
     {
         Vector2 aim = inputActions.Player.Aim.ReadValue<Vector2>();
+
+        UpdateForwardSpeed();
 
         transform.Rotate(0f, aim.x * turnSpeed * Time.deltaTime, 0f, Space.Self);
 
@@ -48,6 +59,30 @@ public class ShipMovement : MonoBehaviour
         transform.position += movement * Time.deltaTime;
 
         UpdateVisualBanking(aim.x, aim.y);
+    }
+
+    private void ToggleThrottle(InputAction.CallbackContext context)
+    {
+        throttleActive = !throttleActive;
+        brakeActive = false;
+    }
+
+    private void ToggleBrake(InputAction.CallbackContext context)
+    {
+        brakeActive = !brakeActive;
+        throttleActive = false;
+    }
+
+    private void UpdateForwardSpeed()
+    {
+        if (throttleActive)
+        {
+            forwardSpeed = Mathf.Min(forwardSpeed + acceleration * Time.deltaTime, maxForwardSpeed);
+        }
+        else if (brakeActive)
+        {
+            forwardSpeed = Mathf.Max(forwardSpeed - deceleration * Time.deltaTime, 0f);
+        }
     }
 
     private void UpdateVisualBanking(float aimX, float aimY)
