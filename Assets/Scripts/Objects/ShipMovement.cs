@@ -4,13 +4,14 @@ using UnityEngine.InputSystem;
 public class ShipMovement : MonoBehaviour
 {
     [Header("Movement")]
-    [SerializeField] private float forwardSpeed = 20f;
-    [SerializeField] private float horizontalSpeed = 10f;
+    [SerializeField] private float forwardSpeed = 0f;
     [SerializeField] private float verticalSpeed = 10f;
+    [SerializeField] private float turnSpeed = 10f;
 
     [Header("Visual Banking")]
     [SerializeField] private Transform visualModel;
     [SerializeField] private float maxRoll = 30f;
+    [SerializeField] private float maxPitch = 30f;
     [SerializeField] private float rotationSmoothing = 180f;
 
     private InputSystem_Actions inputActions;
@@ -40,28 +41,24 @@ public class ShipMovement : MonoBehaviour
     {
         Vector2 aim = inputActions.Player.Aim.ReadValue<Vector2>();
 
-        Vector3 localMovement = new Vector3(
-            aim.x * horizontalSpeed,
-            aim.y * verticalSpeed,
-            forwardSpeed);
+        transform.Rotate(0f, aim.x * turnSpeed * Time.deltaTime, 0f, Space.Self);
 
-        transform.Translate(localMovement * Time.deltaTime, Space.World);
+        Vector3 movement = transform.forward * forwardSpeed;
+        movement += Vector3.up * (aim.y * verticalSpeed);
+        transform.position += movement * Time.deltaTime;
 
-        UpdateVisualBanking(aim.x);
+        UpdateVisualBanking(aim.x, aim.y);
     }
 
-    private void UpdateVisualBanking(float aimX)
+    private void UpdateVisualBanking(float aimX, float aimY)
     {
         if (visualModel == null)
         {
             return;
         }
 
-        // Negative Aim X is a left bank. Only the visual model rolls around local Z.
-        Quaternion targetRotation = visualModelNeutralRotation * Quaternion.Euler(aimX * maxRoll, 0f, 0f);
-        visualModel.localRotation = Quaternion.RotateTowards(
-            visualModel.localRotation,
-            targetRotation,
-            rotationSmoothing * Time.deltaTime);
+        // Visual model rolls on X and pitches on Z.
+        Quaternion targetRotation = visualModelNeutralRotation * Quaternion.Euler(aimX * maxRoll, 0f, -aimY * maxPitch);
+        visualModel.localRotation = Quaternion.RotateTowards(visualModel.localRotation, targetRotation, rotationSmoothing * Time.deltaTime);
     }
 }

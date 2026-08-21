@@ -31,7 +31,7 @@ public class TargetCursor : MonoBehaviour
 
         rectTransform.anchoredPosition += aimInput * moveSpeed * Time.deltaTime;
 
-        Vector2 targetPosition = new Vector2(aimInput.x * horizontalRange, aimInput.y * verticalRange);
+        Vector2 targetPosition = new Vector2(aimInput.x * horizontalRange, -aimInput.y * verticalRange);
 
         rectTransform.anchoredPosition = Vector2.SmoothDamp(rectTransform.anchoredPosition, targetPosition, ref cursorVelocity, 0.1f);
     }
