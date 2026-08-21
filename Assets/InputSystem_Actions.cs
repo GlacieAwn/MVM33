@@ -221,7 +221,7 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                 {
                     ""name"": ""up"",
                     ""id"": ""a6e65411-0bf1-463f-9979-7fb492970eab"",
-                    ""path"": ""<HID::Logitech Logitech Dual Action>/hat/down"",
+                    ""path"": ""<HID::Logitech Logitech Dual Action>/hat/up"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",

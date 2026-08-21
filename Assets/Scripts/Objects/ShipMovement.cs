@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using TMPro;
 
 public class ShipMovement : MonoBehaviour
 {
@@ -15,6 +16,9 @@ public class ShipMovement : MonoBehaviour
     [SerializeField] private float maxRoll = 30f;
     [SerializeField] private float maxPitch = 30f;
     [SerializeField] private float rotationSmoothing = 180f;
+
+    [Header("Debug Values")]
+    [SerializeField] private TMP_Text debugText;
 
     private InputSystem_Actions inputActions;
     private Quaternion visualModelNeutralRotation;
@@ -62,6 +66,7 @@ public class ShipMovement : MonoBehaviour
         transform.position += movement * Time.deltaTime;
 
         UpdateVisualBanking(aim.x, aim.y);
+        UpdateDebugText();
     }
 
     private void ToggleThrottle(InputAction.CallbackContext context)
@@ -98,5 +103,15 @@ public class ShipMovement : MonoBehaviour
         // Visual model rolls on X and pitches on Z.
         Quaternion targetRotation = visualModelNeutralRotation * Quaternion.Euler(aimX * maxRoll, 0f, -aimY * maxPitch);
         visualModel.localRotation = Quaternion.RotateTowards(visualModel.localRotation, targetRotation, rotationSmoothing * Time.deltaTime);
+    }
+
+    private void UpdateDebugText()
+    {
+        debugText.text = 
+        "Ship Values:\n" +
+        $"Current Speed: {currentSpeed}\n" +
+        $"Position: {transform.position}\n" +
+        $"Rotation: {transform.rotation}\n" +
+        "";
     }
 }
