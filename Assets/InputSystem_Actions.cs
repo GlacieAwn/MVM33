@@ -275,8 +275,19 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""9a129e66-267f-4ac7-9cf8-3855a3b68790"",
-                    ""path"": """",
+                    ""id"": ""f5f57c6c-a310-4bf2-aa52-cdc903e7cc35"",
+                    ""path"": ""<Keyboard>/space"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Shoot"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""d0237bbb-c070-4b76-8e63-b9682346cecd"",
+                    ""path"": ""<HID::Logitech Logitech Dual Action>/button2"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",

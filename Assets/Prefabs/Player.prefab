@@ -235,6 +235,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2378802670886242936}
+  - component: {fileID: 7801834523967051891}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -259,6 +260,32 @@ Transform:
   - {fileID: 7777495165303065589}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7801834523967051891
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4207650705386525671}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b8d0a76faab443e5b9413928a5302d3d, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: Assembly-CSharp::ShipShooting
+  projectilePrefab: {fileID: 0}
+  weaponSpawn: {fileID: 0}
+  projectileSpeed: 100
+  projectileLifetime: 5
+  chargeProjectilePrefab: {fileID: 0}
+  chargeWeaponSpawn: {fileID: 0}
+  hasChargeShot: 0
+  chargeVisualSpawnDelay: 0.2
+  chargeShotThreshold: 0.2
+  maxChargeTime: 1
+  minimumChargeScale: {x: 1, y: 1, z: 1}
+  maximumChargeScale: {x: 3, y: 3, z: 3}
+  targetCursor: {fileID: 0}
+  gameplayCamera: {fileID: 0}
 --- !u!1 &4810891804384740938
 GameObject:
   m_ObjectHideFlags: 0

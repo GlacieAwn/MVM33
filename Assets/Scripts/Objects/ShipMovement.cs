@@ -25,10 +25,12 @@ public class ShipMovement : MonoBehaviour
     private bool throttleActive;
     private bool brakeActive;
     private float currentSpeed = 0f;
+    private ShipShooting shipShooting;
 
     private void Awake()
     {
         inputActions = new InputSystem_Actions();
+        shipShooting = GetComponent<ShipShooting>();
 
         if (visualModel != null)
         {
@@ -107,11 +109,18 @@ public class ShipMovement : MonoBehaviour
 
     private void UpdateDebugText()
     {
+        float currentCharge = shipShooting != null ? shipShooting.CurrentCharge : 0f;
+        bool isCharging = shipShooting != null && shipShooting.IsCharging;
+        bool hasChargeShot = shipShooting != null && shipShooting.HasChargeShot;
+
         debugText.text = 
         "Ship Values:\n" +
         $"Current Speed: {currentSpeed}\n" +
         $"Position: {transform.position}\n" +
         $"Rotation: {transform.rotation}\n" +
+        $"Current Charge: {currentCharge}\n" +
+        $"Is Charging: {isCharging}\n" +
+        $"Has Charge Shot: {hasChargeShot}\n" +
         "";
     }
 }
