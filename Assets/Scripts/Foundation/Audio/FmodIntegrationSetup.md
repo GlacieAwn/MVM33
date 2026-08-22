@@ -4,5 +4,6 @@ Import the official FMOD for Unity package into this project. The package define
 
 Do not add bank paths to these scripts. In the Inspector, assign event references directly:
 
-- `FmodOneShotPlayer`: assign any event to test one-shots.
-- `FmodMusicPlayer`: assign music events from the `Music/` directory in your FMOD project. `Shuffle` chooses from this list. Call `PlayCurrentSongLooped` to restart the selected event and use its authored loop region. The player never manually restarts a playing event, so FMOD preserves the authored loop points.
+- `FmodOneShotPlayer`: assign an event, click **Refresh Event Parameters**, then set the exposed parameter values.
+- `FmodMusicPlayer`: assign one music event with an authored loop region, click **Refresh Event Parameters**, then set the exposed parameter values. Call `PlayLooped` to start it; FMOD preserves the authored loop points.
+- `AudioManager`: assign the one-shot and music-player components, then optionally assign a Scene Start Event. Its event starts automatically with the scene. Each event's inspector has a **Refresh Event Parameters** button that exposes all of its current local FMOD parameters.
