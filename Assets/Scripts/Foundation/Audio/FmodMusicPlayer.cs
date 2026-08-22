@@ -35,6 +35,12 @@ using UnityEngine;
 
             StopCurrent();
             currentInstance = RuntimeManager.CreateInstance(musicEvent);
+
+            foreach (ParamRef parameter in parameters)
+            {
+                currentInstance.setParameterByName(parameter.Name, parameter.Value);
+            }
+
             currentInstance.start();
         }
 
