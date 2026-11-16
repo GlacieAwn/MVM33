@@ -9,6 +9,7 @@ public class ShipMovement : MonoBehaviour
     [SerializeField] private float acceleration = 10f;
     [SerializeField] private float deceleration = 20f;
     [SerializeField] private float verticalSpeed = 10f;
+    [SerializeField] private float verticalSmoothSpeed = 5f;
     [SerializeField] private float turnSpeed = 10f;
 
     [Header("Visual Banking")]
@@ -25,6 +26,7 @@ public class ShipMovement : MonoBehaviour
     private bool throttleActive;
     private bool brakeActive;
     private float currentSpeed = 0f;
+    private float currentVerticalSpeed = 0f;
     private ShipShooting shipShooting;
 
     private void Awake()
@@ -61,10 +63,11 @@ public class ShipMovement : MonoBehaviour
         transform.Rotate(0f, aim.x * turnSpeed * Time.deltaTime, 0f, Space.Self);
 
         float speedRatio = currentSpeed / maxSpeed;
-        float currentVerticalSpeed = verticalSpeed * speedRatio;
+        float targetVerticalSpeed = aim.y * verticalSpeed * speedRatio;
+        currentVerticalSpeed = Mathf.Lerp(currentVerticalSpeed, targetVerticalSpeed, verticalSmoothSpeed * Time.deltaTime);
 
         Vector3 movement = transform.forward * currentSpeed;
-        movement += Vector3.up * (aim.y * currentVerticalSpeed);
+        movement += Vector3.up * currentVerticalSpeed;
         transform.position += movement * Time.deltaTime;
 
         UpdateVisualBanking(aim.x, aim.y);

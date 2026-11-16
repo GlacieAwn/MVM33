@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.03.00">
+	<object class="AudioFile" id="{78675f86-681c-47cc-9121-522be50d8dec}">
+		<property name="assetPath">
+			<value>BGM/STAGE/BGM_PAUSE.wav</value>
+		</property>
+		<property name="isStreaming">
+			<value>true</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>48</value>
+		</property>
+		<property name="channelCount">
+			<value>2</value>
+		</property>
+		<property name="length">
+			<value>71.40495833333334</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{12f54c19-010d-4c63-8640-a4faf598724e}</destination>
+		</relationship>
+	</object>
+</objects>

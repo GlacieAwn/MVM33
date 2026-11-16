@@ -26,6 +26,7 @@ public class ShipShooting : MonoBehaviour
     private const float AimRayDistance = 1000f;
 
     private InputSystem_Actions inputActions;
+    private TargetCursor targetCursorController;
     private Projectile chargeProjectile;
     private float currentCharge;
     private bool isCharging;
@@ -45,6 +46,11 @@ public class ShipShooting : MonoBehaviour
             {
                 targetCursor = cursor.GetComponent<RectTransform>();
             }
+        }
+
+        if (targetCursor != null)
+        {
+            targetCursorController = targetCursor.GetComponent<TargetCursor>();
         }
 
         if (gameplayCamera == null)
@@ -157,16 +163,31 @@ public class ShipShooting : MonoBehaviour
 
     private void FireNormalShot()
     {
-        if (projectilePrefab == null || weaponSpawn == null || targetCursor == null || gameplayCamera == null)
+        if (projectilePrefab == null || weaponSpawn == null || targetCursorController == null)
         {
+            Debug.Log("FireNormalShot: missing reference");
             return;
         }
 
-        Ray cursorRay = gameplayCamera.ScreenPointToRay(targetCursor.position);
+        Debug.Log("FireNormalShot: starting");
+
+        Ray cursorRay = targetCursorController.GetAimRay();
+
+        Debug.Log($"Aim ray: origin={cursorRay.origin}, direction={cursorRay.direction}");
+
         Vector3 targetPoint = cursorRay.GetPoint(AimRayDistance);
         Vector3 firingDirection = (targetPoint - weaponSpawn.position).normalized;
 
-        Projectile projectile = Instantiate(projectilePrefab, weaponSpawn.position, Quaternion.LookRotation(firingDirection));
+        Debug.Log($"Firing direction: {firingDirection}");
+
+        Projectile projectile = Instantiate(
+            projectilePrefab,
+            weaponSpawn.position,
+            Quaternion.LookRotation(firingDirection)
+        );
+
+        Debug.Log("Projectile instantiated");
+
         projectile.Launch(firingDirection, projectileSpeed, projectileLifetime);
     }
 }
