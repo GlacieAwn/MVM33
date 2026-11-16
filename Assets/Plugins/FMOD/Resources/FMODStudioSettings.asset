@@ -307,9 +307,8 @@ MonoBehaviour:
   switchSettingsMigration: 1
   HasSourceProject: 1
   HasPlatforms: 1
-  sourceProjectPath: ../../Music Projects/FMOD/Star Command MVM/star command mvm/star
-    command mvm.fspro
-  sourceBankPath: ../../Music Projects/FMOD/Star Command MVM/star command mvm/Build
+  sourceProjectPath: Assets/FMOD Project/star command mvm/star command mvm.fspro
+  sourceBankPath: Assets/FMOD Project/star command mvm/Build
   sourceBankPathUnformatted: 
   BankRefreshCooldown: 5
   ShowBankRefreshWindow: 1
