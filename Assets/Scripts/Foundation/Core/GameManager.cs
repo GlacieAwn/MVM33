@@ -15,20 +15,20 @@ public class GameManager : MonoBehaviour
 
     public void Awake()
     {
-        audioManager.GetComponent<AudioManager>();
+        audioManager.GetComponent<AudioManager>(); 
         inputActions = new InputSystem_Actions();
         pauseMenu.SetActive(false);
     }
 
 	private void OnEnable()
 	{
-        inputActions.Player.Pause.performed += OnPause;
+        inputActions.UI.Pause.performed += OnPause;
 		inputActions.Enable();
 	}
 
     private void OnDisable()
     {
-        inputActions.Player.Pause.performed -= OnPause;
+        inputActions.UI.Pause.performed -= OnPause;
         inputActions.Disable();
     }
 

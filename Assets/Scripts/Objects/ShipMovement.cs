@@ -42,21 +42,21 @@ public class ShipMovement : MonoBehaviour
 
     private void OnEnable()
     {
-        inputActions.Player.Throttle.performed += ToggleThrottle;
-        inputActions.Player.Brake.performed += ToggleBrake;
-        inputActions.Player.Enable();
+        inputActions.Ship.Throttle.performed += ToggleThrottle;
+        inputActions.Ship.Brake.performed += ToggleBrake;
+        inputActions.Ship.Enable();
     }
 
     private void OnDisable()
     {
-        inputActions.Player.Throttle.performed -= ToggleThrottle;
-        inputActions.Player.Brake.performed -= ToggleBrake;
-        inputActions.Player.Disable();
+        inputActions.Ship.Throttle.performed -= ToggleThrottle;
+        inputActions.Ship.Brake.performed -= ToggleBrake;
+        inputActions.Ship.Disable();
     }
 
     private void Update()
     {
-        Vector2 aim = inputActions.Player.Aim.ReadValue<Vector2>();
+        Vector2 aim = inputActions.Ship.Aim.ReadValue<Vector2>();
 
         UpdatecurrentSpeed();
 

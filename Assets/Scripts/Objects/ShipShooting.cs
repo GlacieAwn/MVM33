@@ -41,7 +41,7 @@ public class ShipShooting : MonoBehaviour
 
         if (targetCursor == null)
         {
-            TargetCursor cursor = FindFirstObjectByType<TargetCursor>();
+            TargetCursor cursor = FindAnyObjectByType<TargetCursor>();
             if (cursor != null)
             {
                 targetCursor = cursor.GetComponent<RectTransform>();
@@ -61,16 +61,16 @@ public class ShipShooting : MonoBehaviour
 
     private void OnEnable()
     {
-        inputActions.Player.Shoot.started += BeginCharge;
-        inputActions.Player.Shoot.canceled += ReleaseShot;
-        inputActions.Player.Enable();
+        inputActions.Ship.Shoot.started += BeginCharge;
+        inputActions.Ship.Shoot.canceled += ReleaseShot;
+        inputActions.Ship.Enable();
     }
 
     private void OnDisable()
     {
-        inputActions.Player.Shoot.started -= BeginCharge;
-        inputActions.Player.Shoot.canceled -= ReleaseShot;
-        inputActions.Player.Disable();
+        inputActions.Ship.Shoot.started -= BeginCharge;
+        inputActions.Ship.Shoot.canceled -= ReleaseShot;
+        inputActions.Ship.Disable();
 
         if (chargeProjectile != null)
         {

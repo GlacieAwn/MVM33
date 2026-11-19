@@ -28,7 +28,7 @@ public class TargetCursor : MonoBehaviour
 
     private void Update()
     {
-        Vector2 aimInput = input.Player.Aim.ReadValue<Vector2>();
+        Vector2 aimInput = input.Ship.Aim.ReadValue<Vector2>();
         Debug.Log(aimInput);
 
         rectTransform.anchoredPosition += aimInput * moveSpeed * Time.deltaTime;
