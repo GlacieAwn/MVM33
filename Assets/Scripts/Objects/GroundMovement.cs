@@ -11,6 +11,7 @@ public class GroundMovement : MonoBehaviour
     [SerializeField] private float _jumpForce = 15.0f;
     [SerializeField] private float _jumpBufferTime = 0.15f;
     [SerializeField] private float _maxSpeed;
+    [SerializeField] private float _currentSpeed;
     [SerializeField] private float _acceleration = 15f;
     [SerializeField] private float _deceleration = 15f;
 
@@ -65,6 +66,7 @@ public class GroundMovement : MonoBehaviour
         "Player Values:\n" +
         $"Position: {transform.position}\n" +
         $"Rotation: {transform.rotation}\n" +
+        $"Current Speed: {_currentSpeed}\n" +
         $"Grouned: {_isGrounded}" +
         "";
 
@@ -86,7 +88,16 @@ public class GroundMovement : MonoBehaviour
             transform.rotation = Quaternion.LookRotation(flatForward, Vector3.up);
         }
 
-        Vector3 targetVelocity = moveDirection * _walkSpeed;
+        if(_inputActions.Ground.Sprint.IsPressed())
+        {
+            _currentSpeed = _runSpeed;
+        }
+        else if(!_inputActions.Ground.Sprint.IsPressed())
+        {
+            _currentSpeed = _walkSpeed;
+        }
+
+        Vector3 targetVelocity = moveDirection * _currentSpeed;
 
         Vector3 currentHorizontal = new Vector3(_rb.linearVelocity.x, 0f, _rb.linearVelocity.z);
         Vector3 newHorizontal = Vector3.MoveTowards(currentHorizontal, targetVelocity, accelRate * Time.deltaTime);
@@ -118,8 +129,6 @@ public class GroundMovement : MonoBehaviour
     {
 
         _jumpBufferCounter = _jumpBufferTime;
-        // Handle Jumping
-
 
     }
 

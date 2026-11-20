@@ -958,6 +958,15 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Sprint"",
+                    ""type"": ""Button"",
+                    ""id"": ""ffe051ee-adac-482e-a612-6e8d8645a8a4"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -1048,6 +1057,17 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                     ""action"": ""Camera Y"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""36d0a66f-e93f-458e-ba41-9a1dbd8d2a4e"",
+                    ""path"": ""<Gamepad>/rightShoulder"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Sprint"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -1141,6 +1161,7 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         m_Ground_CameraX = m_Ground.FindAction("Camera X", throwIfNotFound: true);
         m_Ground_CameraY = m_Ground.FindAction("Camera Y", throwIfNotFound: true);
         m_Ground_Jump = m_Ground.FindAction("Jump", throwIfNotFound: true);
+        m_Ground_Sprint = m_Ground.FindAction("Sprint", throwIfNotFound: true);
     }
 
     ~@InputSystem_Actions()
@@ -1573,6 +1594,7 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
     private readonly InputAction m_Ground_CameraX;
     private readonly InputAction m_Ground_CameraY;
     private readonly InputAction m_Ground_Jump;
+    private readonly InputAction m_Ground_Sprint;
     /// <summary>
     /// Provides access to input actions defined in input action map "Ground".
     /// </summary>
@@ -1600,6 +1622,10 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "Ground/Jump".
         /// </summary>
         public InputAction @Jump => m_Wrapper.m_Ground_Jump;
+        /// <summary>
+        /// Provides access to the underlying input action "Ground/Sprint".
+        /// </summary>
+        public InputAction @Sprint => m_Wrapper.m_Ground_Sprint;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -1638,6 +1664,9 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
             @Jump.started += instance.OnJump;
             @Jump.performed += instance.OnJump;
             @Jump.canceled += instance.OnJump;
+            @Sprint.started += instance.OnSprint;
+            @Sprint.performed += instance.OnSprint;
+            @Sprint.canceled += instance.OnSprint;
         }
 
         /// <summary>
@@ -1661,6 +1690,9 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
             @Jump.started -= instance.OnJump;
             @Jump.performed -= instance.OnJump;
             @Jump.canceled -= instance.OnJump;
+            @Sprint.started -= instance.OnSprint;
+            @Sprint.performed -= instance.OnSprint;
+            @Sprint.canceled -= instance.OnSprint;
         }
 
         /// <summary>
@@ -1922,5 +1954,12 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnJump(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "Sprint" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnSprint(InputAction.CallbackContext context);
     }
 }
